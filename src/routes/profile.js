@@ -30,7 +30,7 @@ profileRouter.put("/profile/edit", userAuth, async (req, res) => {
         const user = req.user;
         console.log("🚀 ~ user:", user)
 
-        const updatedUser = await User.findByIdAndUpdate({ _id: user[0]._id }, req.body, { new: true, runValidators: true })
+        const updatedUser = await User.findByIdAndUpdate({ _id: user._id }, req.body, { new: true, runValidators: true })
         console.log("🚀 ~ updatedUser:", updatedUser)
         res.send(updatedUser).status(200)
     } catch (error) {
@@ -51,14 +51,14 @@ profileRouter.put("/profile/password", userAuth, async (req, res) => {
 
         //first compare the old password with the hashed password
         const { oldPassword, newPassword } = req.body;
-        const isMatch = await bcrypt.compare(oldPassword, user[0].password)
+        const isMatch = await bcrypt.compare(oldPassword, user.password)
 
         if (!isMatch) {
             res.status(400).send("Old password is incorrect")
         }
         //hash the new password
         const newHashedPasswword = await bcrypt.hash(newPassword, 10)
-        const updatedData = await User.findByIdAndUpdate({ _id: user[0]._id },
+        const updatedData = await User.findByIdAndUpdate({ _id: user._id },
             { password: newHashedPasswword }
         )
 

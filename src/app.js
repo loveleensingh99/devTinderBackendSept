@@ -7,18 +7,18 @@ const port = 3000;
 
 const cookieParser = require("cookie-parser")
 
- 
+
 
 app.use(express.json())
 app.use(cookieParser())
 
 const authRouter = require("./routes/auth")
 const profileRouter = require("./routes/profile")
-const requestRouter = require("./routes/request")
+const connectionRequestRouter = require("./routes/connectionRequest")
+const userRouter = require("./routes/user")
 
 
-
-app.use("/", authRouter, profileRouter, requestRouter)
+app.use("/", authRouter, profileRouter,connectionRequestRouter,userRouter)
 
 
 connectDb()
@@ -33,4 +33,3 @@ connectDb()
     });
 
 
- 
